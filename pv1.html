@@ -89,20 +89,20 @@ const verguetung = 5 / 100;
 // ==========================================
 
 const verbraucherNamen = [
-    "Top1",
-    "Top2",
-    "Top3",
-    "Top4",
-    "Top5",
-    "Top6",
-    "Top7",
-    "Top8",
-    "Top9",
-    "Top10",
-    "Top11",
-    "Top12",
-    "Top13",
-    "Top14",
+    "Verbraucher A",
+    "Verbraucher B",
+    "Verbraucher C",
+    "Verbraucher D",
+    "Verbraucher E",
+    "Verbraucher F",
+    "Verbraucher G",
+    "Verbraucher H",
+    "Verbraucher I",
+    "Verbraucher J",
+    "Verbraucher K",
+    "Verbraucher L",
+    "Verbraucher M",
+    "Verbraucher N",
     "Lift",
     "Heizung"
 ];
@@ -194,9 +194,10 @@ function simulation(
     for (const name in verbraucher) {
 
         let verkauf =
-            einspeisungStatisch * schluessel[name] * ersparnis;
+            einspeisungStatisch * schluessel[name] * verguetung;
 
         gewinn_statisch[name] += verkauf;
+        gewinn_statisch[name] = Math.round(gewinn_statisch[name]);
 
     }
 
@@ -208,6 +209,8 @@ function simulation(
     // ======================================
 
     const dynamisch = {};
+
+    let gewinn_dynamisch = {};
 
     let faktorverbraucher;
 
@@ -230,6 +233,8 @@ function simulation(
         const zuteilung =
             verbraucher[name] *
             faktorverbraucher;
+        
+        gewinn_dynamisch[name] = zuteilung * ersparnis;
 
         dynamisch[name] =
             runden(zuteilung);
@@ -241,6 +246,15 @@ function simulation(
     const einspeisungDynamisch =
         gesamterzeugung -
         summedynamisch;
+
+    for (const name in verbraucher) {
+
+        let verkauf =
+            einspeisungDynamisch * schluessel[name] * verguetung;
+
+        gewinn_dynamisch[name] += verkauf;
+        gewinn_dynamisch[name] = Math.round(gewinn_dynamisch[name]);
+    }
 
 
 
@@ -270,7 +284,7 @@ function simulation(
     </p>
 
     <p>
-    <b>Statisch zugeteilt:</b>
+    <b>Statisch zugeteilt (pro Verbraucher):</b>
     ${runden(zuteilung_statisch)} Wh
     </p>
 
@@ -343,7 +357,7 @@ function simulation(
 
                     {
                         label:
-                            "Verbrauch",
+                            "Verbrauch (Wh)",
 
                         data:
                             verbraucherNamen.map(
@@ -353,7 +367,7 @@ function simulation(
 
                     {
                         label:
-                            "Dynamisch",
+                            "Dynamisch (Wh)",
 
                         data:
                             verbraucherNamen.map(
@@ -363,7 +377,7 @@ function simulation(
 
                     {
                         label:
-                            "Statisch",
+                            "Statisch (Wh)",
 
                         data:
                             verbraucherNamen.map(
@@ -373,13 +387,23 @@ function simulation(
 
                     {
                         label:
-                            "Ersparnis Statisch",
+                            "Ersparnis Dynamisch (cent)",
+
+                        data:
+                            verbraucherNamen.map(
+                                n => gewinn_dynamisch[n]
+                            )
+                    },
+                    {
+                        label:
+                            "Ersparnis Statisch (cent)",
 
                         data:
                             verbraucherNamen.map(
                                 n => gewinn_statisch[n]
                             )
-                    }
+                    },
+
                 ]
             }
         }
