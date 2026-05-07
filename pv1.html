@@ -77,6 +77,12 @@ function summe(objekt) {
 }
 
 
+// ==========================================
+// Variablen
+// ==========================================
+
+const ersparnis = 20 / 100;
+const verguetung = 5 / 100;
 
 // ==========================================
 // NAMEN
@@ -158,6 +164,8 @@ function simulation(
 
     let summestatisch = 0;
 
+    let gewinn_statisch = {};
+
     for (const name in verbraucher) {
 
         let zuteilung =
@@ -173,6 +181,8 @@ function simulation(
         statisch[name] =
             runden(zuteilung);
 
+        gewinn_statisch[name] = zuteilung * ersparnis;
+
         summestatisch += zuteilung;
     }
 
@@ -181,6 +191,16 @@ function simulation(
         gesamterzeugung -
         summestatisch;
 
+    for (const name in verbraucher) {
+
+        let verkauf =
+            einspeisungStatisch * schluessel[name] * ersparnis;
+
+        gewinn_statisch[name] += verkauf;
+
+    }
+
+    
 
 
     // ======================================
@@ -348,6 +368,16 @@ function simulation(
                         data:
                             verbraucherNamen.map(
                                 n => statisch[n]
+                            )
+                    },
+
+                    {
+                        label:
+                            "Ersparnis Statisch",
+
+                        data:
+                            verbraucherNamen.map(
+                                n => gewinn_statisch[n]
                             )
                     }
                 ]
