@@ -28,15 +28,25 @@ h1 {
 </head>
 <body>
 
-<button onclick="simulationVerbrauchGroesser()">
+<button id="button1" onclick="simulationVerbrauchGroesser()">
 Beispiel 1
 </button>
 
-<button onclick="simulationErzeugungGroesser()">
+<button id="button2" onclick="simulationErzeugungGroesser()">
 Beispiel 2
 </button>
 
-<h1>Gemeinschaftliche Erzeugungslanlage</h1>
+<h1>Gemeinschaftliche Erzeugungsanlage - Simulation der statischen und dynamischen Aufteilung</h1>
+
+<p>Vergleich zwischen statischer und dynamischer Aufteilung anhand von simulierten Daten. Zum Aktualisieren der Werte Knopf
+    <a href="#" onclick="document.getElementById('button1').click(); return false;">
+        Beispiel 1
+    </a>
+    oder
+    <a href="#" onclick="document.getElementById('button2').click(); return false;">
+        Beispiel 2
+    </a>
+    drücken!</p>
 
 <div id="summary"></div>
 
